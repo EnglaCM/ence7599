@@ -1,0 +1,1 @@
+'Min favoritstad är Stockholm';
