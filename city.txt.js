@@ -1,1 +1,1 @@
-'Min favoritstad är Stockholm';
+'Min favoritstad är Uppsala';
