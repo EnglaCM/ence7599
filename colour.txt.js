@@ -1,2 +1,2 @@
-$favouriteColour = 'red';
+$favouriteColour = 'orange';
 return 'My favourite colour is ' . $favouriteColour;
