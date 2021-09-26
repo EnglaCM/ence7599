@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Style</title>
+        <style>
+            h2 {
+                color: blue;
+                text-align: center;
+            }
+            .baz {
+                color: crimson;
+            }
+            #foo {
+                color: coral;
+            }
+        </style>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <h1 style="color: blue; text-align: center;">Welcome to my Web Page</h1>
+        <h1 style="color: rgb(102, 39, 110);">Welcome to my Web Page</h1>
+        <h2>Welcome to my Web Page</h2>
+        <h2 id="foo" class="baz">Welcome to my Web Page</h2>
+        <h3>Welcome to my Web Page</h3>
+        <h1 class="baz">Welcome to my Web Page</h1>
+        <h1 class="baz">Welcome to my Web Page</h1>
+        Hello, world!
+    </body>
+</html>
+
+<! med style lägger vi till css properties till ett särskilt element i html-koden>
+<! varje sånt value vi anger har ett default value, men vi kan ändra dem>
+<! När style anges ger vi först en propery (color) som vi sen ger ett value till (blue) dessa avgränsas med ett kolon (:) och avslutas med ett semikolon (;)>
+<! style appliceras på hela delen den tillhör. Om den istället flyttas upp till body kommer allt inom bodyn ha den stilen>
+<! För att inte behöva kopiera samma style om och om igen (som vi gjort ovan - det kallas in-line styling) kan style läggas till i head-sektionen>
+<! Görs style i headingen anger man först vilka element som berörs (alla h2 element) och sedan vilka attributer dessa ska ha>
+<! I head anges information som inte dissplayas. Det i bodyn displayas>
+<! Nu är dock css-koden bara kopplad till just denna sida. För att inte behöva kopiera all style för varje sida som ska följa samma format skapar vi en ny css-fil (styles.css) med denna info som kan användas av fler filer>
+<! för att hämta css-filen gör vi en länk till filen, anger att relationen är en stylesheet och sen en länk till filen>
+<! nu kan då ändringar som berör alla pages göras i en enda fil>
+<! Ska ett element ha något attribut som skiljer sig från det som angetts att alla ska ha, kan detta element tillskrivas ett id. Vi kan då reference detta element mha id:t>
+<! # används för att koden bara ska hämta ett specifikt id>
+<! Om alla element förutom ett särskilt ska ändras ska vi hänvisa till en class>
+<! Ett id är helt unikt för element, medan flera element kan ha samma class>
+<! En punkt (.) är för classer som # är för id>
+
+<! Specificity:>
+<! När flera style-attribut anges till samma element (först utifrån vilken type den har, sen genom id, sen class etc.)>
+<! Då följs denna ordning: 1. inline, 2. id, 3. class, 4. type>
+<! inline är alltså det starkaste sättet att ange style>
+
+
+<! CSS Selectors>
+<! Olika sätt att ange vilka som berörs i style>
+<! Det går att söka på dessa>
+
+<! Det som anges som title är det som står på fliken i browsern>

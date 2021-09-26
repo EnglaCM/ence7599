@@ -1,0 +1,20 @@
+E-post: https://outlook.office365.com/mail/inbox
+
+Schema: https://cloud.timeedit.net/uu/web/schema/s.ics?i=yQ660Q4X8Z65Q0Z45553YZ650W44nQ6604
+
+Wi-fi: eduroam 
+
+Quiz:
+
+    A) Studium och studentportalen
+
+    B) Studium har ersatt studentportalen
+
+    C) Ladok
+
+    D) 12 dagar
+
+    E) Nej
+
+Enkät: Efter utbildningen
+

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Hello!</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <style>
+            .row > div {
+                background-color: skyblue;
+                padding: 10px;
+                border: 2px solid snow;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        Hello, world!
+        <div class="alert alert-primary" role="alert">
+            Here is my alert!
+        </div>
+        <div class="alert alert-danger" role="alert">
+            Here is my alert!
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                This is a section.
+            </div>
+            <div class="col-6">
+                This is a section.
+            </div>
+            <div class="col-3">
+                This is a section.
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-sm-6">
+                This is a section.
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                This is a section.
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                This is a section.
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                This is a section.
+            </div>
+        </div>
+    </body>
+</html>
+
+
+<! man kan ge en div en class från bootstrap och använda deras kod för att få deras skapade egenskaper>
+<! link måste anges när kod från bootstrap ska appliseras. Du får href från hemsidan - introduction - CSS>
+<! Bootstrap har en bootstrap column model som gör att koden är responsive>
+<! de delar upp sidor i 12 columner>
+<! med class="col-siffra" anger siffra hur många kolumner (av 12 per row) elementet ska ta upp.>
+<! class="col-lg-siffra" anger antal columner om den är en large screen>
+<! class="col-sm-siffra" anger antal columner om den är en small screen>
+<! När det blir mer än 12 kolumner går det över till nästa row>
+<! Så bootstrap blir på det sättet responsive>
+
+

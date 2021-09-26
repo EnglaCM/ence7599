@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Form</title>
+    </head>
+    <body>
+        <form>
+            <input type="text" placeholder="Full name" name="name">
+            <input type="submit">
+            <input type="password" placeholder="Password" name="password">
+            
+            <div>
+                <input name="country" list="countries" placeholder="Country">
+                <datalist id="countries">
+                    <option value="Afghanistan"></option>
+                    <option value="Albania"></option>
+                </datalist>
+            </div>
+        </form>
+    </body>
+</html>
+
+<! till formulärets input anger vi vilken typ inputen är (text) och placeholder, vilket är hinten om vad som ska stå i inputen som hjälp för användaren>
+<! name är inget som syns för användaren av sidan, men används senare i kod för att kunna referera till den information som inputades i formuläret>
+<! type="submit" innebär att här trycker användaren och då submitar de sina svar>
+<! type="password" är en annan, då visas inte alla char som skrivs in p.g.a. säkerhetskäl>
+<! type="radio" är när användaren kan välja från olika alternativ>
+<! div byter rad>
