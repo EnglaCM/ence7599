@@ -2,18 +2,9 @@
 <html lang="en">
     <head>
         <title>Hello!</title>
-        <link rel="stylesheet" href="variables.scss">
+        <link rel="stylesheet" href="variables.css">
     </head>
-    <style>
-        ul {
-            font-size: 14px;
-            color: red;
-        }
-        ol {
-            font-size: 18px;
-            color: red;
-        }
-    </style>
+    
     <body>
         <ul>
             <li>unordered item</li>
@@ -33,6 +24,9 @@
 <! Variablerna definieras i Sass-filen, och hämtas sen med link till filen>
 <! För att browsern ska förstå Sass-kod måste denna kod kompileras>
 <! sass måste alltså laddas ner på datorn för att kunna köras>
-<! kompileringen sker så här: sass varibles.scss:variables.css >
+<! kompileringen sker så här: sass varibles.scss:variables.css - lyckades inte med det>
+<! kompileringen kan göras om du trycker nere på watch sass. Då skapas en ny fil som heter .css, och det är den du hämtar i link>
+
+<! Nu kan du göra ändringar i scss-filen och sen kompilera den igen med watch sass. Det är smidigt>
 
 
