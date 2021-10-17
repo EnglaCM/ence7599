@@ -56,4 +56,5 @@ while logout == False:
     materialChoice(user,name) 
 
 # Problem som återstår är:
-#  en nu inte kan fortsätta på gammalt material
+#  en nu inte kan fortsätta på gammalt material 
+# det jag vill ska hända är att en fortsätter som u[name]['new'] = False i nästa loop av materialChoice
