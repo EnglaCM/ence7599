@@ -1,8 +1,10 @@
 #from vetej import materialChoice
 #from loginwopassword import login
-from options import chooseMaterial
+#from options import chooseMaterial
 from translateVocab import translateVocab
 from glosovning import glosovning
+from menu import menu
+
 
 #users = ['engla'] # Tror även dessa ska flyttas upp i filer
 #name = input('Username: ')
@@ -30,31 +32,41 @@ def login(name):
         u[name]['new'] = False
     return u
 
+def chooseMaterial(user, name):
+    print()
+    if user[name]['new'] == True:
+        title = 'Welcome!'
+        options = {'1':'Add new material', '2':'Log out'}
+        prompt = 'Option: '
+        user[name]['new'] = False
+    else:
+        title = 'Hello!'
+        options = {'1':'Add new material', '2':'Use old material', '3':'Log out'}
+        prompt = 'Option: '
+
+    a = menu(title, prompt, options)
+    return a
+
 def materialChoice(user,name):
     a = chooseMaterial(user,name)
 
     if a == 'Add new material':
         translateVocab(user,name)
         glosovning(user, name)
-        # Gå till funktion som sköter glosövningen
     elif a == 'Use old material':
         glosovning(user, name)
-        # Gå till funktion som sköter glosövningen
     else:
         print ('See you soon!')
         global logout 
         logout = True
-        #breakpoint
 
-#materialChoice(user,name) # Så här kör den en gång
 
-users = [] # Tror även dessa ska flyttas upp i filer
+users = [] 
 name = input('Username: ')
 user = login(name)
 
 while logout == False:
     materialChoice(user,name) 
 
-# Problem som återstår är:
-#  en nu inte kan fortsätta på gammalt material 
-# det jag vill ska hända är att en fortsätter som u[name]['new'] = False i nästa loop av materialChoice
+
+# Nu har egentligen iinte login en funktion, men finns till för att man ska kunna lagra information om användarens vokabulär när appen utvecklas

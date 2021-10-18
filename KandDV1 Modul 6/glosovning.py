@@ -26,11 +26,12 @@ def glosovning(user, name):
     #translateVocab(user,name)
     result = user[name]['vocab']
     #print(result)
-    if num > len(result):
-        num = len(result)
+    if num > len(user[name]['vocab']):
+        num = len(user[name]['vocab'])
 
     for i in range(num):
-        user[name]['Hard'].append(result[i])
+        v = user[name]['vocab'].pop(0)
+        user[name]['Hard'].append(v)
 
     while len(user[name]['Hard']) != 0 or len(user[name]['Medium']) != 0:
         for i in range(len(user[name]['Hard'])):
