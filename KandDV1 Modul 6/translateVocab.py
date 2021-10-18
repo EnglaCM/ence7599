@@ -30,5 +30,6 @@ def translateVocab(user,name):
         result.append((translation.origin, translation.text))
         #print(translation.origin, translation.text)
 
-    user[name]['vocab'] += result
+    user[name]['vocab'] = result
+    #user[name]['vocab'] += result
     #print(result)
