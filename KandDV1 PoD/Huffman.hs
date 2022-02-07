@@ -16,9 +16,10 @@ type BitCode = [Bool]
 -- END OF DO NOT MODIFY ZONE
 --------------------------------------------------------------------------------
 {- characterCounts s
+   Counts the occurence of the characters in s and adds it to an empty table
    RETURNS: a table that maps each character that occurs in s to the number of times the character occurs in s
-   EXAMPLES: characterCounts "this is an example of a huffman tree" == T [('i',2),('s',2),('x',1),('p',1),('l',1),('o',1),('h',2),('u',1),('f',3),('m',2),('a',4),('n',2),(' ',7),('t',2),('r',1),('e',4)]
-            characterCounts ""  == T []
+   EXAMPLES: characterCounts "tree" == T [('t',1),('r',1),('e',2)]
+             characterCounts ""  == T []
  -}
 characterCounts :: String -> Table Char Int
 characterCounts s = characterCounts' s (Table.empty)
@@ -27,8 +28,8 @@ characterCounts s = characterCounts' s (Table.empty)
    maps each character in s to the number of times it occures in s
    PRE: t is empty
    RETURNS: table t with each character that occurs in s added and mapped to the number of times the character occurs in s
-   EXAMPLES: characterCounts' "this is an example of a huffman tree" Table.empty == T [('i',2),('s',2),('x',1),('p',1),('l',1),('o',1),('h',2),('u',1),('f',3),('m',2),('a',4),('n',2),(' ',7),('t',2),('r',1),('e',4)]
-            characterCounts' "" Table.empty == T []
+   EXAMPLES: characterCounts' "tree" Table.empty == T [('t',1),('r',1),('e',2)]
+             characterCounts' "" Table.empty == T []
  -}
 characterCounts' :: String -> Table Char Int -> Table Char Int
 characterCounts' [] t = t
@@ -39,7 +40,7 @@ characterCounts' (s:ss) t
     t' = Table.delete t s 
     Just v = Table.lookup t s
 
-testTable = characterCounts "this is an example of a huffman tree"
+testTable = characterCounts "this is an example of a huffman tree"  -- will be used in function declarations
   
 -- modify and add comments as needed
 {- a HuffmanTree is a full binary tree where 
@@ -66,12 +67,11 @@ data HuffmanTree = Leaf (Char, Int)
 huffmanTree :: Table Char Int -> HuffmanTree
 huffmanTree t = huffmanCheck (Table.iterate t prioritise PriorityQueue.empty)
 
-smallHeap = Table.iterate (characterCounts "tree") prioritise PriorityQueue.empty
 {- prioritise p k 
 Inserts the tuple k as (Leaf k) into the PriorityQueue p
 RETURNS: k inserted to p
 EXAMPLES: prioritise PriorityQueue.empty ('c',3) == BinoHeap [Node 0 3 (Leaf ('c',3)) []]
-          prioritise smallHeap ('v',2) 
+          prioritise (Table.iterate (characterCounts "tree") prioritise PriorityQueue.empty) ('v',2) 
             == BinoHeap [Node 2 1 (Leaf ('t',1)) [Node 1 2 (Leaf ('e',2)) [Node 0 2 (Leaf ('v',2)) []],Node 0 1 (Leaf ('r',1)) []]]
 -}
 prioritise :: PriorityQueue HuffmanTree -> (Char, Int) -> PriorityQueue HuffmanTree
@@ -80,10 +80,10 @@ prioritise p (k,v) = PriorityQueue.insert p (Leaf (k,v),v)
 {- huffmanCheck p
 if p is empty, it returns an empty HuffmanTree, otherwise it creates a HuffmanTree based on p by using huffmanTree'
 RETURNS: a HuffmanTree based on p
-EXAMPLES: huffmanCheck BinoHeap [Node 0 2 (Leaf ('e',2)) [],Node 1 2 (Leaf ('a',2)) [Node 0 3 (Leaf ('c',3)) []]] 
-            == HuffmanNode (Leaf ('c',3)) 7 (HuffmanNode (Leaf ('a',2)) 4 (Leaf ('e',2)))
-          huffmanCheck BinoHeap [Node 0 3 (Leaf ('c',3)) []] == Leaf ('c',3)
-          huffmanCheck pempty = HuffmanEmpty
+EXAMPLES: huffmanCheck PriorityQueue.empty = HuffmanEmpty
+          huffmanCheck (Table.iterate (characterCounts "tree") prioritise PriorityQueue.empty) 
+              == HuffmanNode (Leaf ('e',2)) 4 (HuffmanNode (Leaf ('t',1)) 2 (Leaf ('r',1)))
+          huffmanCheck (Table.iterate (characterCounts "xxx" ) prioritise PriorityQueue.empty) == Leaf ('x',3)
 -}
 huffmanCheck :: PriorityQueue HuffmanTree -> HuffmanTree
 huffmanCheck treeQueue
@@ -94,9 +94,9 @@ huffmanCheck treeQueue
 creates a HuffmanTree based on the priority in p
 PRE: p is not empty
 RETURNS: a HuffmanTree based on p
-EXAMPLES: huffmanTree' BinoHeap [Node 0 2 (Leaf ('e',2)) [],Node 1 2 (Leaf ('a',2)) [Node 0 3 (Leaf ('c',3)) []]] 
-            == HuffmanNode (Leaf ('c',3)) 7 (HuffmanNode (Leaf ('a',2)) 4 (Leaf ('e',2)))
-          huffmanTree' BinoHeap [Node 0 3 (Leaf ('c',3)) []] == Leaf ('c',3)
+EXAMPLES: huffmanTree' (Table.iterate (characterCounts "tree") prioritise PriorityQueue.empty) 
+            == HuffmanNode (Leaf ('e',2)) 4 (HuffmanNode (Leaf ('t',1)) 2 (Leaf ('r',1)))
+          huffmanTree' (Table.iterate (characterCounts "xxx" ) prioritise PriorityQueue.empty) == Leaf ('x',3)
 -}
 huffmanTree' treeQueue
   | PriorityQueue.is_empty hs = t1
@@ -106,7 +106,7 @@ huffmanTree' treeQueue
     (p2@(t2,v2),hss) = PriorityQueue.least hs
 
 {- mergeTree (t1,v1) (t2,v2)
-Takes two trees,t1 and t2 and their node labels, v1 and v2, and merges t1 and t2 into one HuffmanTree with the nodelabel (v1+v2)
+Takes two trees,t1 and t2, and their node labels, v1 and v2, and merges t1 and t2 into one HuffmanTree with the nodelabel (v1+v2)
 PRE: v1 and v2 are the corresponding node values to t1 and t2, t1 and t2 are not empty
 RETURNS: HuffmanNode t1 (v1+v2) t2 
 EXAMPLES: mergeTree (Leaf ('a',2),2) (Leaf('c',3),3) == HuffmanNode (Leaf ('a',2)) 5 (Leaf ('c',3))
@@ -118,14 +118,10 @@ EXAMPLES: mergeTree (Leaf ('a',2),2) (Leaf('c',3),3) == HuffmanNode (Leaf ('a',2
 mergeTree :: (HuffmanTree, Int) -> (HuffmanTree, Int) -> HuffmanTree
 mergeTree (t1,v1) (t2,v2) = HuffmanNode t1 (v1+v2) t2
 
-pempty = PriorityQueue.empty :: PriorityQueue HuffmanTree
-heap = Table.iterate testTable prioritise pempty 
--- == BinoHeap [Node 4 1 (Leaf ('x',1)) [Node 3 1 (Leaf ('r',1)) [Node 2 2 (Leaf ('m',2)) [Node 1 2 (Leaf ('n',2)) [Node 0 4 (Leaf ('a',4)) []],Node 0 3 (Leaf ('f',3)) []],Node 1 2 (Leaf ('t',2)) [Node 0 7 (Leaf (' ',7)) []],Node 0 4 (Leaf ('e',4)) []],Node 2 1 (Leaf ('l',1)) [Node 1 1 (Leaf ('u',1)) [Node 0 2 (Leaf ('h',2)) []],Node 0 1 (Leaf ('o',1)) []],Node 1 2 (Leaf ('i',2)) [Node 0 2 (Leaf ('s',2)) []],Node 0 1 (Leaf ('p',1)) []]]
-
-testTree = huffmanTree testTable
+testTree = huffmanTree testTable -- will be used in function declarations
 
 {- codeTable h
-   maps each character in a HuffmanTree to its Huffman code
+   maps each character in a HuffmanTree, h, to its Huffman code
    RETURNS: a table that maps each character in h to its Huffman code
    EXAMPLES: codeTable (HuffmanNode (Leaf ('e',2)) 4 (HuffmanNode (Leaf ('t',1)) 2 (Leaf ('r',1)))) == 
                     T [('e',[False]),('t',[True,False]),('r',[True,True])]
@@ -173,8 +169,10 @@ encode' t (s:ss) b = encode' t ss (b ++ bcode)
   where Just bcode = Table.lookup t s
 
 {- compress s
+   creates a tuple consisting of a Huffmantree based on s, and the Huffman coding of s under this tree
    RETURNS: (a Huffman tree based on s, the Huffman coding of s under this tree)
-   EXAMPLES: compress "" = (Leaf ('0',0),[])
+   EXAMPLES: compress "" = (HuffmanEmpty,[])
+             compress "xxx" == (Leaf ('x',3),[False,False,False])
              compress "tree" == (HuffmanNode (Leaf ('e',2)) 4 (HuffmanNode (Leaf ('t',1)) 2 (Leaf ('r',1))),[True,False,True,True,False,False])
 -}
 compress :: String -> (HuffmanTree, BitCode)
@@ -186,7 +184,7 @@ compress s = (tree, bcode)
 
 
 {- decompress h bits
-   builds a string based on the bitcode bits and HuffmanTree h
+   builds a string based on the bitcode, bits, and the HuffmanTree, h
    PRE:  bits is a concatenation of valid Huffman code words for h
    RETURNS: the decoding of bits under h
    EXAMPLES: decompress HuffmanEmpty [] == ""
@@ -213,20 +211,20 @@ decompress' h b s = decompress' h bs (ss:s)
   where
     (bs,ss) = (treeLookup h b)
 
-{- decompress' h bits
-   finds the first character bits codes for in h
+{- treeLookup h bits
+   finds the first character that bits codes for in h and, if h is not a Leaf, the remaining BitCode when this character is identified
    PRE:  bits is a concatenation of valid Huffman code words for h, h is non-empty
-   RETURNS: first character bits codes for in h and (if h is only a Leaf) bits, unchanged 
+   RETURNS: first character bits codes for in h and (if h is a Leaf) bits 
               or (otherwise) bits without the BitCode that coded for the first characer
    EXAMPLES: treeLookup (Leaf ('x',3)) [False,False,False] = ([False,False,False],'x')
-             treeLookup (HuffmanNode (Leaf ('e',2)) 4 (HuffmanNode (Leaf ('t',1)) 2 (Leaf ('r',1)))) [True,False,True,True,False,False] = ([True,True,False,False],'t')
+             treeLookup (HuffmanNode (Leaf ('e',2)) 4 (HuffmanNode (Leaf ('t',1)) 2 (Leaf ('r',1)))) [True,False,True,True,False,False] == ([True,True,False,False],'t')
  -}
 treeLookup :: HuffmanTree -> BitCode -> (BitCode, Char)
 treeLookup (Leaf (c,i)) b = (b,c)
 treeLookup (HuffmanNode t1 _ _) (False:bs) = treeLookup t1 bs 
 treeLookup (HuffmanNode _ _ t2) (True:bs) = treeLookup t2 bs 
 
-t = "this is an example of a huffman tree"
+testString = "this is an example of a huffman tree"
 --------------------------------------------------------------------------------
 -- Test Cases
 -- You may add your own test cases here:
