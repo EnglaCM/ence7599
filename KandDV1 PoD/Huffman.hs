@@ -98,6 +98,7 @@ EXAMPLES: huffmanTree' (Table.iterate (characterCounts "tree") prioritise Priori
             == HuffmanNode (Leaf ('e',2)) 4 (HuffmanNode (Leaf ('t',1)) 2 (Leaf ('r',1)))
           huffmanTree' (Table.iterate (characterCounts "xxx" ) prioritise PriorityQueue.empty) == Leaf ('x',3)
 -}
+huffmanTree' :: PriorityQueue HuffmanTree -> HuffmanTree
 huffmanTree' treeQueue
   | PriorityQueue.is_empty hs = t1
   | otherwise = huffmanTree' $ PriorityQueue.insert hss ((mergeTree p1 p2), (v1+v2))
