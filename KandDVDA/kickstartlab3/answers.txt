@@ -1,0 +1,64 @@
+Question 1: Why are we saving bits 20-16 and 15-11 of the instruction? How are they used, and why do
+we not save the whole instruction?
+
+
+R-format instructions have the first (starting from right) 6 bits as the funct, the next 5 bits as shamt, 
+and the destination register as the following 5 bits - bits 11-15.
+
+The destination register for lw is however bits 16-20. 
+(lw: Offset 0-15, dest 16-20, base 21-25, opcode 26-31    -  base is the register you add the offset to)
+
+sw and branch don't write to register
+
+The other bits in the instruction are used in the register or are sign extended and saved. We don't 
+need to save them for later use
+
+(RegDst = 1 when R-format, RegDst = 0 for branch, sw and lw)
+
+
+
+
+
+Question 2: For each of the signals from the control circuit, explain why is it a write-back (WB), memory
+(MEM) or execution signal (EX).
+
+
+RegWrite determines whether we should write to the register or not 
+- it should therefore be used in WB - when we write back to the register
+
+MemtoReg determines if we should write from the memory to the reg (otherwise from the ALU to reg)
+- it should therefore be used in WB - when we write back to the register (that's when we need to 
+  know which data we should choose to write back
+
+MemWrite and MemRead determine if we should write/read from memory - quite obvious that this is in the 
+ stage where we access the memory
+
+Branch is in the MEM stage just because in this data path, we won't now if the registers are equal 
+ or not until they have passed the ALU in the EX stage. MEM is in the stage after EX
+
+The rest are needed to control which of the instruction bits 11-15 or 16-20 we should continue to 
+  save as the destination registers (RegDst) (it is unnecessary to save them both throghout the whole datapath, 
+  which operation the ALU should perform (ALUOp) (it is in the EX stage the ALU needs to know this),
+  and which data the ALU should use in the operation (ALUSrc). The ALU is in the EX stage.
+
+
+
+Question 3: What does the program do?
+1: loads 1 to $t1, stores 0 first word in memory
+2: loads 1 to $t1, stores 1 to third word in memory
+3: loads 1 to $t1, loads 2 to $t2, save 3 to $t3, save 4 to $t3, stores 4 to third memory
+
+
+
+Question 4: If you execute the code on your pipelined processor, does it work? (Does it produce the
+expected result?)
+No, because of data hazard. Data is not in register when we try to access it
+
+
+Question 5: If the answer to Question 4 is NO, explain why?
+Because of data hazard. Data is not in register when we try to access it
+
+
+Question 6: If the answer to Question 4 is NO, change the code so it will work. (Hint: you can use the
+online MIPS assemblera to compile new code and save it in your own .mem file to test.)
+
